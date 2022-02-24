@@ -35,7 +35,7 @@ For audio this currently ships with PulseAudio and Pavucontrol, I am working on 
 ## Install Archie Linux from GitHub
 
 ```sh
-curl -LO https://github.com/liveemily/archieinstall/blob/master/install.sh && sh ./install.sh
+curl -LO https://raw.githubusercontent.com/LiveEmily/ArchieInstall/main/install.sh && sh ./install.sh
 ```
 
 ## Install Archie Linux from liveemily.xyz
