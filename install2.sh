@@ -1,5 +1,7 @@
 #!/usr/bin/env /usr/bin/bash
 
+echo "vm.swappiness=1" >> /etc/sysctl.d/99-swappiness.conf
+
 systemctl enable NetworkManager.service
 
 continent=$(whiptail --title "Timezone" --inputbox "Please give me the continent for your timezone e.g. Europe\nCAPS MATTERS" 10 60 3>&1 1>&2 2>&3)
@@ -36,10 +38,10 @@ whiptail --title "Setup time" --msgbox "We will now setup all the packages, conf
 runuser -l $userName -c "git clone https://git.codingvm.codes/emily/dotfiles && mkdir ~/.config && mv dotfiles/nvim dotfiles/zsh dotfiles/shell ~/.config/ && touch ~/.zshrc && echo 'source ~/.config/zsh/.zshrc' >> ~/.zshrc && rm -rf dotfiles"
 # New line for readability
 sed -i 's/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
-runuser -l $userName -c "git clone https://aur.archlinux.org/yay && cd yay && makepkg -si --noconfirm && cd .. && sudo rm -rf yay && yay -S --noconfirm nerd-fonts-mononoki ttf-material-design-icons brave-bin"
+runuser -l $userName -c "git clone https://aur.archlinux.org/yay && cd yay && makepkg -si --noconfirm && cd .. && sudo rm -rf yay && yay -S --noconfirm nerd-fonts-mononoki ttf-material-design-icons brave-bin pcmanfm-qt"
 runuser -l $userName -c "git clone https://git.liveemily.xyz/Emily/dwm-pkgbuild.git && cd dwm-pkgbuild && makepkg -si --noconfirm --skipchecksums && cd .. && sudo rm -rf dwm-pkgbuild && touch ~/.xinitrc && echo '/etc/dwm/autostart' >> ~/.xinitrc"
 runuser -l $userName -c "git clone https://github.com/LukeSmithxyz/st && cd st && sudo make install && cd .. && sudo rm -rf st"
-runuser -l $username -c "curl https://liveemily.xyz/archieinstall/wallpaper.png --output /home/emily/wallpaper.png"
+runuser -l $username -c "curl https://liveemily.xyz/archieinstall/wallpaper.png --output ~/wallpaper.png"
 sed -i 's/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/g'
 
 disk=$(whiptail --title "Storage devices" --inputbox "As this is now running on a different script, we would kindly like to ask for you to input your drive again as you have last time\n\n\n$(lsblk -e7 -e11)" 40 80 3>&1 1>&2 2>&3)

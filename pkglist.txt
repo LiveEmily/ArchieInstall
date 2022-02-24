@@ -34,10 +34,12 @@ neofetch
 neovim
 networkmanager
 nodejs
+noto-fonts-cjk
 pacman
 patch
-pavucontrol
+pavucontrol-qt
 picom
+pcmanfm-qt
 pkgconf
 pulseaudio-jack
 python
@@ -47,6 +49,8 @@ sed
 sudo
 texinfo
 ttf-joypixels
+unzip
+vlc
 wget
 which
 xclip
@@ -99,4 +103,6 @@ xorg-xwayland
 xorg-xwd
 xorg-xwininfo
 xorg-xwud
+zathura
+zip
 zsh

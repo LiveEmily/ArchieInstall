@@ -49,7 +49,7 @@ curl -LO https://liveemily.xyz/archieinstall/install.sh && sh ./install.sh
 ## List of packages
 You could take a look at https://github.com/liveemily/archieinstall/blob/master/pkglist.txt, but let's be honest, who will actually do that.
 <br>
->autoconf automake base binutils bison brave-bin curl dmenu dosfstools dunst dwm efibootmgr fakeroot feh file findutils flex gawk gcc gettext git grep groff grub gzip htop jack2 jack2-dbus libtool linux linux-firmware linux-headers m4 make neofetch neovim nerd-fonts-mononoki networkmanager nodejs pacman patch pavucontrol picom pkgconf pulseaudio-jack python qjackctl rofi sed sudo texinfo ttf-joypixels ttf-material-design-icons wget which xclip xf86-video-vesa xorg-bdftopcf xorg-docs xorg-font-util xorg-fonts-100dpi xorg-fonts-75dpi xorg-fonts-encodings xorg-iceauth xorg-mkfontscale xorg-server xorg-server-common xorg-server-devel xorg-server-xephyr xorg-server-xnest xorg-server-xvfb xorg-sessreg xorg-setxkbmap xorg-smproxy xorg-x11perf xorg-xauth xorg-xbacklight xorg-xcmsdb xorg-xcursorgen xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma xorg-xhost xorg-xinit xorg-xinput xorg-xkbcomp xorg-xkbevd xorg-xkbutils xorg-xkill xorg-xlsatoms xorg-xlsclients xorg-xmodmap xorg-xpr xorg-xprop xorg-xrandr xorg-xrdb xorg-xrefresh xorg-xset xorg-xsetroot xorg-xvinfo xorg-xwayland xorg-xwd xorg-xwininfo xorg-xwud yay zsh
+>autoconf automake base binutils bison brave-bin curl dmenu dosfstools dunst dwm efibootmgr fakeroot feh file findutils flex gawk gcc gettext git grep groff grub gzip htop jack2 jack2-dbus libtool linux linux-firmware linux-headers m4 make neofetch neovim nerd-fonts-mononoki networkmanager nodejs noto-fonts-cjk pacman patch picom pkgconf pulseaudio-jack python qjackctl rofi sed sudo texinfo ttf-joypixels ttf-material-design-icons unzip vlc wget which xclip xf86-video-vesa xorg-bdftopcf xorg-docs xorg-font-util xorg-fonts-100dpi xorg-fonts-75dpi xorg-fonts-encodings xorg-iceauth xorg-mkfontscale xorg-server xorg-server-common xorg-server-devel xorg-server-xephyr xorg-server-xnest xorg-server-xvfb xorg-sessreg xorg-setxkbmap xorg-smproxy xorg-x11perf xorg-xauth xorg-xbacklight xorg-xcmsdb xorg-xcursorgen xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma xorg-xhost xorg-xinit xorg-xinput xorg-xkbcomp xorg-xkbevd xorg-xkbutils xorg-xkill xorg-xlsatoms xorg-xlsclients xorg-xmodmap xorg-xpr xorg-xprop xorg-xrandr xorg-xrdb xorg-xrefresh xorg-xset xorg-xsetroot xorg-xvinfo xorg-xwayland xorg-xwd xorg-xwininfo xorg-xwud yay zathura zip zsh
 
 ***
 
@@ -58,6 +58,16 @@ You could take a look at https://github.com/liveemily/archieinstall/blob/master/
 To contribute to this project, please open an issue or PR first before anything. I hand review every issue and PR so I might not reply instantly.
 
 Further instructions will be provided on a later date, for now just make sure you create an issue and/or fork and make a pull request.
+
+## Supporters / Testers
+
+👤 **Lucie**
+
+**Huge** thanks for being a beta tester and providing little details I missed! ❤️
+
+* Website: https://lucie-dev.xyz
+* Twitter: [@LucieCupcakes](https://twitter.com/LucieCupcakes)
+* Github: [@Lucie](https://github.com/lucie-cupcakes)
 
 ## Author
 
