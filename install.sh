@@ -22,28 +22,30 @@ read dialog <<< "$(which whiptail dialog 2> /dev/null)"
 }
 
 chrooting() {
-	"$dialog" --title "Chrooting into system" --msgbox "We will now chroot into your newly installed system to continue..." 10 60
+	"$dialog" --title "Chrooting into system" --msgbox "We will now chroot into your newly installed system to continue..." 8 78
 	cp ./install2.sh /mnt/
 	chmod +x /mnt/install2.sh
-	arch-chroot /mnt ./install2.sh
+	arch-chroot /mnt ./install2.sh $disk
+	rm -rf /mnt/install2.sh install.sh pkglist.txt
 	umount -R /mnt
 	reboot now
 }
 
 export_fstab() {
-	"$dialog" --title "Generating fstab file" --msgbox "We will now generate your fstab file for mounting the partitions at boot..." 10 60
+	"$dialog" --title "Generating fstab file" --msgbox "We will now generate your fstab file for mounting the partitions at boot..." 8 78
 	genfstab -U /mnt >> /mnt/etc/fstab
 	chrooting
 }
 
 install_packages() {
-	"$dialog" --title "Installing packages" --msgbox "We will now install all required non aur packages, please stand by..." 10 60
+	"$dialog" --title "Installing packages" --msgbox "We will now install all required non aur packages, please stand by..." 8 78
+	sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' /etc/pacman.conf
 	pacstrap /mnt - < ./pkglist.txt
 	export_fstab
 }
 
 mount_part() {
-	"$dialog" --title "Mounting partitions" --msgbox "We will now mount the partitions, please stand by..." 10 60
+	"$dialog" --title "Mounting partitions" --msgbox "We will now mount the partitions, please stand by..." 8 78
 	if [[ -d "/sys/firmware/efi" ]]; then
 		if [ $swap == "true" ] && [ $home == "true" ]; then
 			mount /dev/"$diskpart"4 /mnt
@@ -93,7 +95,7 @@ mount_part() {
 }
 
 partition_disk() {
-	"$dialog" --title "Partitioning drive" --msgbox "Your disk will now be partitioned, please stand by..." 10 60
+	"$dialog" --title "Partitioning drive" --msgbox "Your disk will now be partitioned, please stand by..." 8 78
 	if [[ -d "/sys/firmware/efi" ]]; then
 		if [ $swap == "true" ] && [ $home == "true" ]; then
 			echo ",1048576,6
@@ -162,25 +164,25 @@ partition_disk() {
 }
 
 choose_swap_size() {
-	swapSize=$("$dialog" --title "Choose swap size" --inputbox "Please choose the amount of swap space you want in GB(GigaBytes).\nUsually it would be best practice to have double your RAM as swap. So 2x$ramgb in your case." 10 60 3>&1 1>&2 2>&3)
+	swapSize=$("$dialog" --title "Choose swap size" --inputbox "Please choose the amount of swap space you want in GB(GigaBytes).\nUsually it would be best practice to have double your RAM as swap. So 2x$ramgb in your case." 8 78 3>&1 1>&2 2>&3)
 }
 
 choose_home_size() {
-	homeSize=$("$dialog" --title "Choose home size" --inputbox "Please choose how big you want your home partition to be in GB(GigaBytes)." 10 60 3>&1 1>&2 2>&3)
+	homeSize=$("$dialog" --title "Choose home size" --inputbox "Please choose how big you want your home partition to be in GB(GigaBytes)." 8 78 3>&1 1>&2 2>&3)
 }
 
 choose_part() {
-	if("$dialog" --title "SWAP space" --yesno "Would you like to have SWAP space?" 10 60 3>&1 1>&2 2>&3) then
+	if("$dialog" --title "SWAP space" --yesno "Would you like to have SWAP space?" 8 78 3>&1 1>&2 2>&3) then
 		swap=true
 	fi
-	if("$dialog" --title "Home directory" --yesno "Would you like a seperate partition for /home?" 10 60 3>&1 1>&2 2>&3) then
+	if("$dialog" --title "Home directory" --yesno "Would you like a seperate partition for /home?" 8 78 3>&1 1>&2 2>&3) then
 		home=true
 	fi
 }
 
 choose_disk() {
 	disk=$("$dialog" --title "Storage devices" --inputbox "Please choose the drive you want to install Arch on excluding the '/dev/' part\n\n\n$(lsblk -e7 -e11)" 20 60 3>&1 1>&2 2>&3)
-	"$dialog" --title "Disk chosen" --msgbox "You chose disk /dev/$disk!" --ok-button "Continue" 10 60
+	"$dialog" --title "Disk chosen" --msgbox "You chose disk /dev/$disk!" --ok-button "Continue" 8 78
 	choose_part
 
 	if [ $swap == true ]; then
@@ -197,27 +199,19 @@ choose_disk() {
 	partition_disk
 }
 
-check_connection() {
+install_script() {
 	pacman -Sy --noconfirm wget
-	wget -q --spider http://google.com
 
-	if [ $? -eq 0 ]; then
-		"$dialog" --title "Internet connection found!" --msgbox "Succesfully connected to the internet, this script will now proceed to partitioning" --ok-button "Continue" 10 60
-		timedatectl set-ntp true
-		wget https://liveemily.xyz/archieinstall/install2.sh
-		wget https://liveemily.xyz/archieinstall/pkglist.txt
-		choose_disk
-	else
-		"$dialog"
-		exit 2
-	fi
+	timedatectl set-ntp true
+	wget https://liveemily.xyz/archieinstall/install2.sh
+	wget https://liveemily.xyz/archieinstall/pkglist.txt
+	choose_disk
 }
 
 intro_screen() {
-	"$dialog" --title "Archie install script!" --yesno "Welcome to the Archie install script!\nIf you're ready to start, please choose ready, if not choose not ready and come back when you are" --yes-button "Ready" --no-button "Not ready" 10 60
+	"$dialog" --title "Archie install script!" --yesno "Welcome to the Archie install script!\nIf you're ready to start, please choose ready, if not choose not ready and come back when you are" --yes-button "Ready" --no-button "Not ready" 8 78
 	if [ $? -eq 0 ]; then
-		"$dialog" --title "Checking internet connection" --msgbox "This script will now check if there's a valid internet connection, please stand by..." --ok-button "Continue" 10 60
-		check_connection
+		install_script
 	else
 		printf "You chose no!\n\r"
 	fi
