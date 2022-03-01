@@ -1,0 +1,3 @@
+nerd-fonts-mononoki
+brave-bin
+pcmanfm-qt
