@@ -95,12 +95,13 @@ runuser -l $userName -c "git clone https://git.codingvm.codes/emily/dotfiles && 
 # Setup config files
 runuser -l $userName -c "mkdir ~/.config && mv dotfiles/nvim dotfiles/zsh dotfiles/shell ~/.config/ && mv dotfiles/.vimrc ~/ && touch ~/.zshrc && echo 'source ~/.config/zsh/.zshrc' >> ~/.zshrc"
 # Install yay and all aur packages
-runuser -l $userName -c "cd yay && makepkg -si --noconfirm && cd .. && yay -S - < aur.txt"
+runuser -l $userName -c "cd yay && makepkg -si --noconfirm && cd .. && yay -S --noconfirm - < aur.txt"
 # Install window manager
 runuser -l $userName -c "cd dwm-pkgbuild && makepkg -si --noconfirm --skipchecksums && touch ~/.xinitrc && echo '/etc/dwm/autostart' >> ~/.xinitrc && cd ../st && sudo make install"
 
 # Cleanup time
-runuser -l $userName -c "pacman -Scc --noconfirm && yay -Scc --noconfirm && rm -rf ~/dotfiles && rm -rf ~/yay && rm -rf ~/dwm-pkgbuild && rm -rf ~/st && rm -rf ~/.cache/* && rm -rf /tmp/*"
+runuser -l $userName -c "rm -rf ~/dotfiles && rm -rf ~/yay && rm -rf ~/dwm-pkgbuild && rm -rf ~/st && rm -rf ~/.cache/* && rm -rf /tmp/* && rm -rf ~/aur.txt"
+runuser -l $userName -c "yay -Scc --noconfirm"
 sed -i 's/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
 
 if [[ -d "/sys/firmware/efi" ]]; then
@@ -112,5 +113,7 @@ fi
 grub-mkconfig -o /boot/grub/grub.cfg
 
 whiptail --title "Finished!" --msgbox "Phew that was quite some time, but everything should be finished now. Your computer will now reboot and you should be able to login with your username and password. Afterwards please type in the command 'startx' and press enter to get into your new system!" 8 78
+
+rm -rf aur.txt
 
 exit 0
