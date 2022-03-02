@@ -1,6 +1,6 @@
 <h1 align="center">Arch(ie) Linux Install Script!</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/Version-2.0-ff69b4" />
+  <img alt="Version" src="https://img.shields.io/badge/Version-2.1-ff69b4" />
   <a href="https://github.com/liveemily/ArchieInstall/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/liveemily/ArchieInstall"/>
   </a>

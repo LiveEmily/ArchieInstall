@@ -36,14 +36,14 @@ alias bprintf="printf '\\033[0;34m%s''\\033[0;37m'"
 # Whiptail enviornment variables
 
 export NEWT_COLORS='
-root=,cyan
-window=,brightblue
+root=,blue
+window=,brightcyan
 shadow=,black
-border=,brightblue
-title=black,brightblue
-textbox=black,brightblue
-button=brightblue,black
-compactbutton=black,brightblue
+border=,brightcyan
+title=black,brightcyan
+textbox=black,brightcyan
+button=brightcyan,black
+compactbutton=black,brightcyan
 '
 
 
@@ -68,6 +68,8 @@ hostName=$(whiptail --title "Hostname" --inputbox "Please give me the name for t
 
 echo "$hostName" >> /etc/hostname
 
+systemctl enable NetworkManager.service
+
 rootPasswd=$(whiptail --title "User password"  --passwordbox "Please input a password for the root account" 8 78 3>&1 1>&2 2>&3)
 
 echo "root:$rootPasswd" | chpasswd
@@ -86,6 +88,8 @@ whiptail --title "Setup time" --msgbox "We will now setup all the packages, conf
 sed -i 's/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' /etc/pacman.conf
 
+cp ./aur.txt /home/$userName/
+
 # Downloading all necessary files
 runuser -l $userName -c "git clone https://git.codingvm.codes/emily/dotfiles && git clone https://aur.archlinux.org/yay && git clone https://git.liveemily.xyz/Emily/dwm-pkgbuild.git && git clone https://github.com/LukeSmithxyz/st && curl https://liveemily.xyz/archieinstall/wallpaper.png --output ~/wallpaper.png"
 # Setup config files
@@ -96,15 +100,13 @@ runuser -l $userName -c "cd yay && makepkg -si --noconfirm && cd .. && yay -S - 
 runuser -l $userName -c "cd dwm-pkgbuild && makepkg -si --noconfirm --skipchecksums && touch ~/.xinitrc && echo '/etc/dwm/autostart' >> ~/.xinitrc && cd ../st && sudo make install"
 
 # Cleanup time
-runuser -l $userName -c "pacman -Scc && yay -Scc && rm -rf ~/dotfiles && rm -rf ~/yay && rm -rf ~/dwm-pkgbuild && rm -rf ~/st && rm -rf ~/.cache/* && rm -rf /tmp/*"
+runuser -l $userName -c "pacman -Scc --noconfirm && yay -Scc --noconfirm && rm -rf ~/dotfiles && rm -rf ~/yay && rm -rf ~/dwm-pkgbuild && rm -rf ~/st && rm -rf ~/.cache/* && rm -rf /tmp/*"
 sed -i 's/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
-
-disk=$1
 
 if [[ -d "/sys/firmware/efi" ]]; then
 	grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
 else
-	grub-install --target=i386-pc /dev/"$disk"
+	grub-install --target=i386-pc /dev/"$1"
 fi
 
 grub-mkconfig -o /boot/grub/grub.cfg

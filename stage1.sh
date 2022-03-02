@@ -31,14 +31,14 @@ alias bprintf="printf '\\033[0;34m%s''\\033[0;37m'"
 # Whiptail enviornment variables
 
 export NEWT_COLORS='
-root=,cyan
-window=,brightblue
+root=,blue
+window=,brightcyan
 shadow=,black
-border=,brightblue
-title=black,brightblue
-textbox=black,brightblue
-button=brightblue,black
-compactbutton=black,brightblue
+border=,brightcyan
+title=black,brightcyan
+textbox=black,brightcyan
+button=brightcyan,black
+compactbutton=black,brightcyan
 '
 
 
@@ -107,7 +107,7 @@ fi
 if [ $swap == true ]; then
     while :
     do
-        swapSize=$("$dialog" --title "Choose swap size" --inputbox "Please choose the amount of swap space you want in GB(GigaBytes).\nUsually it would be best practice to have double your RAM as swap. So 2x$ramgb in your case." 8 78 3>&1 1>&2 2>&3)
+        swapSize=$("$dialog" --title "Choose swap size" --inputbox "Please choose the amount of swap space you want in GB(GigaBytes).\nUsually it would be best practice to have double your RAM as swap. So 2x$ramGB in your case." 8 78 3>&1 1>&2 2>&3)
         if [[ $swapSize -gt 0 ]]; then
             break
         else
