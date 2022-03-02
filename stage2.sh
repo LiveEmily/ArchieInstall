@@ -88,19 +88,17 @@ whiptail --title "Setup time" --msgbox "We will now setup all the packages, conf
 sed -i 's/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
 sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' /etc/pacman.conf
 
-cp ./aur.txt /home/$userName/
 
 # Downloading all necessary files
 runuser -l $userName -c "git clone https://git.codingvm.codes/emily/dotfiles && git clone https://aur.archlinux.org/yay && git clone https://git.liveemily.xyz/Emily/dwm-pkgbuild.git && git clone https://github.com/LukeSmithxyz/st && curl https://liveemily.xyz/archieinstall/wallpaper.png --output ~/wallpaper.png"
 # Setup config files
 runuser -l $userName -c "mkdir ~/.config && mv dotfiles/nvim dotfiles/zsh dotfiles/shell ~/.config/ && mv dotfiles/.vimrc ~/ && touch ~/.zshrc && echo 'source ~/.config/zsh/.zshrc' >> ~/.zshrc"
 # Install yay and all aur packages
-runuser -l $userName -c "cd yay && makepkg -si --noconfirm && cd .. && yay -S --noconfirm - < aur.txt"
+runuser -l $userName -c "cd yay && makepkg -si --noconfirm && cd .. && yay -S --noconfirm nerd-fonts-mononoki brave-bin pcmanfm-qt"
 # Install window manager
 runuser -l $userName -c "cd dwm-pkgbuild && makepkg -si --noconfirm --skipchecksums && touch ~/.xinitrc && echo '/etc/dwm/autostart' >> ~/.xinitrc && cd ../st && sudo make install"
-
 # Cleanup time
-runuser -l $userName -c "rm -rf ~/dotfiles && rm -rf ~/yay && rm -rf ~/dwm-pkgbuild && rm -rf ~/st && rm -rf ~/.cache/* && rm -rf /tmp/* && rm -rf ~/aur.txt"
+runuser -l $userName -c "rm -rf ~/dotfiles && rm -rf ~/yay && rm -rf ~/dwm-pkgbuild && rm -rf ~/st && rm -rf ~/.cache/* && rm -rf /tmp/*"
 runuser -l $userName -c "yay -Scc --noconfirm"
 sed -i 's/%wheel ALL=(ALL:ALL) NOPASSWD: ALL/# %wheel ALL=(ALL:ALL) NOPASSWD: ALL/g' /etc/sudoers
 
@@ -114,6 +112,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 whiptail --title "Finished!" --msgbox "Phew that was quite some time, but everything should be finished now. Your computer will now reboot and you should be able to login with your username and password. Afterwards please type in the command 'startx' and press enter to get into your new system!" 8 78
 
-rm -rf aur.txt
+rm -rf /tmp/* /home/$userName/.cache/*
 
 exit 0

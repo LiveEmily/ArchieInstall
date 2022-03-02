@@ -70,7 +70,6 @@ pacman -Sy --noconfirm wget
 timedatectl set-ntp true
 wget https://raw.githubusercontent.com/LiveEmily/ArchieInstall/v2.0/stage2.sh
 wget https://raw.githubusercontent.com/LiveEmily/ArchieInstall/v2.0/pacman.txt
-wget https://raw.githubusercontent.com/LiveEmily/ArchieInstall/v2.0/aur.txt
 
 
 # Choose a disk
@@ -259,9 +258,9 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # Chrooting time 
 
 "$dialog" --title "Chrooting into system" --msgbox "We will now chroot into your newly installed system to continue..." 8 78
-cp ./stage2.sh ./aur.txt /mnt/
+cp ./stage2.sh /mnt/
 chmod +x /mnt/stage2.sh
 arch-chroot /mnt ./stage2.sh $disk
-rm -rf /mnt/stage2.sh /mnt/aur.txt
+rm -rf /mnt/stage2.sh
 umount -R /mnt
 reboot now
