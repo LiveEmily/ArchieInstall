@@ -90,7 +90,7 @@ sed -i 's/#ParallelDownloads = 5/ParallelDownloads = 5/g' /etc/pacman.conf
 
 
 # Downloading all necessary files
-runuser -l $userName -c "git clone https://git.codingvm.codes/emily/dotfiles && git clone https://aur.archlinux.org/yay && git clone https://git.liveemily.xyz/Emily/dwm-pkgbuild.git && git clone https://github.com/LukeSmithxyz/st && curl https://liveemily.xyz/archieinstall/wallpaper.png --output ~/wallpaper.png"
+runuser -l $userName -c "git clone https://git.codingvm.codes/emily/dotfiles && git clone https://aur.archlinux.org/yay && git clone https://git.liveemily.xyz/Emily/dwm-pkgbuild.git && git clone https://github.com/LiveEmily/st && curl https://liveemily.xyz/archieinstall/wallpaper.png --output ~/wallpaper.png"
 # Setup config files
 runuser -l $userName -c "mkdir ~/.config && mv dotfiles/nvim dotfiles/zsh dotfiles/shell ~/.config/ && mv dotfiles/.vimrc ~/ && touch ~/.zshrc && echo 'source ~/.config/zsh/.zshrc' >> ~/.zshrc"
 # Install yay and all aur packages
