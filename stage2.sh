@@ -74,7 +74,18 @@ rootPasswd=$(whiptail --title "User password"  --passwordbox "Please input a pas
 
 echo "root:$rootPasswd" | chpasswd
 
-userName=$(whiptail --title "New user" --inputbox "Please give me the name for the new user you'd like to add" 8 78 3>&1 1>&2 2>&3)
+while :
+do
+	userName=$(whiptail --title "New user" --inputbox "Please give me the name for the new user you'd like to add\nPlease note that this cannot include any special characters and can only be lower case." 8 78 3>&1 1>&2 2>&3)
+	if [[ $userName == *['!'@#\$%^\&*()_+]* ]]; then
+		whiptail --title "Wrong username" --msgbox "Please don't use any special characters and try again." 8 78
+	else
+		break
+	fi
+done
+
+userName=$(echo $userName | tr '[:upper:]' '[:lower:]')
+
 userPasswd=$(whiptail --title "User password"  --passwordbox "Please input a password for your newly created user" 8 78 3>&1 1>&2 2>&3)
 
 useradd --create-home "$userName"
